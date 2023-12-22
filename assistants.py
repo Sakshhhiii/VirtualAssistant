@@ -5,12 +5,13 @@ import wikipedia #pip install wikipedia
 import webbrowser
 import os
 import smtplib
+import pywhatkit
+
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 # print(voices[1].id)
 engine.setProperty('voice', voices[0].id)
-
 
 
 def speak(audio):
@@ -38,7 +39,6 @@ def takeCommand():
     with sr.Microphone() as source:
         print("Listening...")
         r.pause_threshold = 1
-        r.energy_threshold=350
         audio = r.listen(source)
 
     try:
@@ -49,64 +49,30 @@ def takeCommand():
     except Exception as e:
         # print(e)  
          print("Say that again please...")  
-    return "None"
+         return "None"
     return query
 
 def sendEmail(to, content):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
-    server.login('sakshisharma6650@gmail.com', 'sakshi@1h')
-    server.sendmail('sakshisharma6650@@gmail.com', to, content)
+    server.login('def@gmail.com', 'def@1h')
+    server.sendmail('def@gmail.com', to, content)
     server.close()
   
 def  music():
     speak("which song you want to play")   
     musicName =takeCommand()
     
-    if 'ram siya ram' in musicName:
-        os.startfile('"C:\\Users\\91941\\Downloads\\_Ram Siya Ram_64(PagalWorld.com.se).mp3"')
-    elif 'maan meri' in musicName:
-        os.startfile('"C:\\Users\\91941\\Downloads\Maan Meri Jaan_64(PagalWorld.com.se).mp3"')
+    if 'perfect' in musicName:
+        os.startfile('C:\\Users\\saksh\\Downloads\\Perfect.mp3')
     else:
         pywhatkit.playonyt(musicName)
     speak("song is being played")   
 
-def whatsapp():
-    speak("name of person you want to send the message")
-    name=takeCommand()
-
-    if 'maa' in name:
-        speak("what is the message to be sent")
-        msg=takeCommand()
-        speak("tell me time sir")
-        speak("time to send message in hour")
-        hour=int(takeCommand())
-        speak("timeto send message  in minutes")
-        min=int(takeCommand())
-        pywhatkit.sendwhatsapp("+917015798029, hii,20,20,5")
-        speak("okay,sending the message boss")
-
-    
-    else:
-        speak("tell me number")
-        phone=int(takeCommand())
-        ph='+91'
-        speak("what is the message to be sent")
-        msg=takeCommand()
-        speak("tell me time sir")
-        speak("time in hour")
-        hour=int(takeCommand())
-        speak("time in minutes")
-        min=int(takeCommand())
-        pywhatkit.sendwhatsapp("+917015798029, hii,20,20,5")
-        speak("okay,sending the message boss")
-
-if __name__ =="__main__":
-    wishMe()
-    
+if __name__ == "__main__":
+    wishMe() 
     while True:
-    # if 1:
         query = takeCommand().lower()
 
         # Logic for executing tasks based on query
@@ -137,10 +103,7 @@ if __name__ =="__main__":
             query= query.replace("google search"," ")
             pywhatkit.search(query)
             speak("it is opened")   
-            
-        elif 'whatsapp' in query:
-            whatsapp()
-
+        
         elif 'open youtube' in query:
             webbrowser.open("youtube.com")
 
@@ -154,15 +117,11 @@ if __name__ =="__main__":
             strTime = datetime.datetime.now().strftime("%H:%M:%S")    
             speak(f"Sir, the time is {strTime}")
 
-        elif 'open code' in query:
-            codePath = "C:\\Users\\Haris\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
-            os.startfile(codePath)
-
         elif ' Send email' in query:
             try:
                 speak("What should I say?")
                 content = takeCommand()
-                to ="sharmameenakshi@gmail.com"
+                to ="AbC@gmail.com"
                 sendEmail(to, content)
                 speak("Email has been sent!")
             except Exception as e:
